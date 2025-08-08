@@ -16,11 +16,9 @@ enum DomesticAnimal {
 
 fn simple() {
     // We can convert a DomesticAnimal to an Animal. As `Animal` contains all
-    // the variants of `DomesticAnimal`, this conversion is always valid.
+    // the variants of `DomesticAnimal`, this conversion is not fallible.
     let domestic = DomesticAnimal::DomesticCat(Cat);
     let animal = domestic.upcast::<Animal>();
-
-    // Which returns the Animal with the same payload
     if let Animal::Cat(cat) = &animal {
         println!("Converted to Animal: {:?}", cat);
     }
