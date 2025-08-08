@@ -83,30 +83,30 @@ fn derive_is_subset_of_impl(
         quote! { ::enum_cast::Contains<#field_type> }
     });
 
-    let widen_arms = variant_info.iter().map(|&(variant_name, _field_type)| {
+    let upcast_arms = variant_info.iter().map(|&(variant_name, _field_type)| {
         quote! {
             #enum_name::#variant_name(v) => Other::make(v)
         }
     });
 
-    let narrow_chain = generate_narrow_chain(variant_info, enum_name);
+    let downcast_chain = generate_downcast_chain(variant_info, enum_name);
 
     quote! {
         impl<Other: #(#other_bounds)+*> ::enum_cast::IsSubsetOf<Other> for #enum_name {
-            fn widen(self) -> Other {
+            fn upcast(self) -> Other {
                 match self {
-                    #(#widen_arms,)*
+                    #(#upcast_arms,)*
                 }
             }
 
-            fn narrow_from(other: Other) -> Result<Self, Other> {
-                #narrow_chain
+            fn downcast_from(other: Other) -> Result<Self, Other> {
+                #downcast_chain
             }
         }
     }
 }
 
-fn generate_narrow_chain(
+fn generate_downcast_chain(
     variant_info: &[(&Ident, &syn::Type)],
     enum_name: &Ident,
 ) -> proc_macro2::TokenStream {
@@ -132,18 +132,18 @@ fn generate_narrow_chain(
 fn derive_extension(enum_name: &Ident) -> proc_macro2::TokenStream {
     quote! {
         impl #enum_name {
-            fn widen<Other>(self) -> Other
+            fn upcast<Other>(self) -> Other
             where
                 Self: ::enum_cast::IsSubsetOf<Other>,
             {
-                <Self as ::enum_cast::IsSubsetOf<Other>>::widen(self)
+                <Self as ::enum_cast::IsSubsetOf<Other>>::upcast(self)
             }
 
-            fn narrow<Other>(self) -> Result<Other, Self>
+            fn downcast<Other>(self) -> Result<Other, Self>
             where
                 Other: ::enum_cast::IsSubsetOf<Self>,
             {
-                <Other as ::enum_cast::IsSubsetOf<Self>>::narrow_from(self)
+                <Other as ::enum_cast::IsSubsetOf<Self>>::downcast_from(self)
             }
         }
     }

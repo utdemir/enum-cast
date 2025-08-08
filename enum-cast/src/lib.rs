@@ -12,6 +12,6 @@ pub trait IsSubsetOf<Other>
 where
     Self: Sized,
 {
-    fn widen(self) -> Other;
-    fn narrow_from(other: Other) -> Result<Self, Other>;
+    fn upcast(self) -> Other;
+    fn downcast_from(other: Other) -> Result<Self, Other>;
 }

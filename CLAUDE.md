@@ -26,14 +26,14 @@ This is a Rust workspace implementing an "enum cast" library that provides type-
 ### Key Concepts
 The library enables:
 1. **Type-safe variant access**: The `Contains<T>` trait provides `make()`, `get()`, and `take()` methods for working with enum variants
-2. **Subset relationships**: The `IsSubsetOf<Other>` trait allows safe widening (`widen()`) and narrowing (`narrow()`) between enums where one is a subset of another
+2. **Subset relationships**: The `IsSubsetOf<Other>` trait allows safe upcasting (`upcast()`) and downcasting (`downcast()`) between enums where one is a subset of another
 3. **Automatic implementation**: The `#[derive(EnumCast)]` macro generates all necessary trait implementations
 
 ### Procedural Macro Details
 The derive macro in `enum-cast-derive/src/lib.rs:6` generates:
 - `Contains<T>` implementations for each variant type
 - `IsSubsetOf<Other>` implementation with proper bounds checking
-- Chain-based narrowing logic that tries each variant type in sequence
+- Chain-based downcasting logic that tries each variant type in sequence
 
 ### Example Usage Pattern
-See `example/src/lib.rs:1` for comprehensive usage examples showing variant access, subset relationships, and narrowing operations.
+See `example/src/lib.rs:1` for comprehensive usage examples showing variant access, subset relationships, and downcasting operations.

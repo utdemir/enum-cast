@@ -18,7 +18,7 @@ fn simple() {
     // We can convert a DomesticAnimal to an Animal. As `Animal` contains all
     // the variants of `DomesticAnimal`, this conversion is always valid.
     let domestic = DomesticAnimal::DomesticCat(Cat);
-    let animal = domestic.widen::<Animal>();
+    let animal = domestic.upcast::<Animal>();
 
     // Which returns the Animal with the same payload
     if let Animal::Cat(cat) = &animal {
@@ -27,7 +27,7 @@ fn simple() {
 
     // We also can convert an Animal back to a DomesticAnimal. This
     // conversion might fail because not all Animals are DomesticAnimals.
-    if let Some(domestic_animal) = animal.narrow::<DomesticAnimal>().ok() {
+    if let Some(domestic_animal) = animal.downcast::<DomesticAnimal>().ok() {
         println!("Converted back to DomesticAnimal: {:?}", domestic_animal);
     }
 }
