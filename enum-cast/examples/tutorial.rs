@@ -27,6 +27,9 @@ fn simple() {
     // conversion might fail because not all Animals are DomesticAnimals.
     if let Some(domestic_animal) = animal.downcast::<DomesticAnimal>().ok() {
         println!("Converted back to DomesticAnimal: {:?}", domestic_animal);
+        if let DomesticAnimal::DomesticCat(cat) = domestic_animal {
+            println!("It's a DomesticCat: {:?}", cat);
+        }
     }
 }
 
