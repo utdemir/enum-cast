@@ -15,7 +15,8 @@ enum DomesticAnimal {
 }
 
 fn simple() {
-    // We can convert a DomesticAnimal to Animal
+    // We can convert a DomesticAnimal to an Animal. As `Animal` contains all
+    // the variants of `DomesticAnimal`, this conversion is always valid.
     let domestic = DomesticAnimal::DomesticCat(Cat);
     let animal = domestic.widen::<Animal>();
 
@@ -24,7 +25,7 @@ fn simple() {
         println!("Converted to Animal: {:?}", cat);
     }
 
-    // We can convert an Animal back to a DomesticAnimal. This
+    // We also can convert an Animal back to a DomesticAnimal. This
     // conversion might fail because not all Animals are DomesticAnimals.
     if let Some(domestic_animal) = animal.narrow::<DomesticAnimal>().ok() {
         println!("Converted back to DomesticAnimal: {:?}", domestic_animal);
