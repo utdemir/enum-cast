@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "enum-cast",
+    "enum-cast-derive",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
