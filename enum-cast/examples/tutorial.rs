@@ -16,7 +16,7 @@ enum DomesticAnimal {
 
 fn simple() {
     // We can convert a DomesticAnimal to Animal
-    let domestic: DomesticAnimal = DomesticAnimal::DomesticCat(Cat);
+    let domestic = DomesticAnimal::DomesticCat(Cat);
     let animal = domestic.widen::<Animal>();
 
     // Which returns the Animal with the same payload
