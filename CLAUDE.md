@@ -19,19 +19,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a Rust workspace implementing an "enum cast" library that provides type-safe enum operations. The project is organized into three crates:
 
 ### Core Architecture
-- **enum-cast**: The main library crate that contains the core traits `Contains<T>` and `IsSubsetOf<Other>`, and re-exports the derive macro
+- **enum-cast**: The main library crate that contains the core traits `HasVariant<T>` and `IsSubsetOf<Other>`, and re-exports the derive macro
 - **enum-cast-derive**: A procedural macro crate that automatically generates implementations of the core traits for enums
 - **example**: Demonstrates usage patterns and serves as integration tests
 
 ### Key Concepts
 The library enables:
-1. **Type-safe variant access**: The `Contains<T>` trait provides `make()`, `get()`, and `take()` methods for working with enum variants
+1. **Type-safe variant access**: The `HasVariant<T>` trait provides `make()`, `get()`, and `take()` methods for working with enum variants
 2. **Subset relationships**: The `IsSubsetOf<Other>` trait allows safe upcasting (`upcast()`) and downcasting (`downcast()`) between enums where one is a subset of another
 3. **Automatic implementation**: The `#[derive(EnumCast)]` macro generates all necessary trait implementations
 
 ### Procedural Macro Details
 The derive macro in `enum-cast-derive/src/lib.rs:6` generates:
-- `Contains<T>` implementations for each variant type
+- `HasVariant<T>` implementations for each variant type
 - `IsSubsetOf<Other>` implementation with proper bounds checking
 - Chain-based downcasting logic that tries each variant type in sequence
 

@@ -1,7 +1,7 @@
 pub use enum_cast_derive::{EnumCast, EnumVariantIds};
 pub use typeid::ConstTypeId;
 
-pub trait Contains<T>
+pub trait HasVariant<T>
 where
     Self: Sized,
 {

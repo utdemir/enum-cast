@@ -14,12 +14,12 @@ pub fn enum_cast_derive(input: TokenStream) -> TokenStream {
         Err(err) => return err.to_compile_error().into(),
     };
 
-    let contains_impls = derive_contains_impls(enum_name, &variant_info);
+    let has_variant_impls = derive_has_variant_impls(enum_name, &variant_info);
     let is_subset_impl = derive_is_subset_of_impl(enum_name, &variant_info);
     let extension_impl = derive_extension(enum_name);
 
     let expanded = quote! {
-        #(#contains_impls)*
+        #(#has_variant_impls)*
         #is_subset_impl
         #extension_impl
     };
@@ -27,15 +27,15 @@ pub fn enum_cast_derive(input: TokenStream) -> TokenStream {
     TokenStream::from(expanded)
 }
 
-fn derive_contains_impls(
+fn derive_has_variant_impls(
     enum_name: &Ident,
     variant_info: &[(&Ident, &syn::Type)],
 ) -> Vec<proc_macro2::TokenStream> {
-    let mut contains_impls = Vec::new();
+    let mut has_variant_impls = Vec::new();
 
     for &(variant_name, field_type) in variant_info {
-        let contains_impl = quote! {
-            impl ::enum_cast::Contains<#field_type> for #enum_name {
+        let has_variant_impl = quote! {
+            impl ::enum_cast::HasVariant<#field_type> for #enum_name {
                 fn make(t: #field_type) -> Self {
                     #enum_name::#variant_name(t)
                 }
@@ -49,10 +49,10 @@ fn derive_contains_impls(
                 }
             }
         };
-        contains_impls.push(contains_impl);
+        has_variant_impls.push(has_variant_impl);
     }
 
-    contains_impls
+    has_variant_impls
 }
 
 fn derive_is_subset_of_impl(
@@ -60,7 +60,7 @@ fn derive_is_subset_of_impl(
     variant_info: &[(&Ident, &syn::Type)],
 ) -> proc_macro2::TokenStream {
     let other_bounds = variant_info.iter().map(|&(_variant_name, field_type)| {
-        quote! { ::enum_cast::Contains<#field_type> }
+        quote! { ::enum_cast::HasVariant<#field_type> }
     });
 
     let upcast_arms = variant_info.iter().map(|&(variant_name, _field_type)| {
