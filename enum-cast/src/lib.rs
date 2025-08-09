@@ -40,7 +40,6 @@ pub use enum_cast_derive::EnumCast;
 /// Derives [EnumVariantIds] trait.
 pub use enum_cast_derive::EnumVariantIds;
 
-
 /// A trait for enums that contain a variant holding a value of type `T`.
 ///
 /// Derived by 'EnumCast'
@@ -73,10 +72,10 @@ where
 pub trait EnumVariantIds {
     /// Returns a vector of the type ids of all variants.
     fn variant_type_ids() -> Vec<std::any::TypeId>;
-
-    /// Returns the type id of the current variant.
-    fn current_variant_id(&self) -> std::any::TypeId;
     // TODO: When TypeId::of starts working in const context[1],
     // we should make this an associated constant instead.
     // [1]: https://github.com/rust-lang/rust/issues/77125
+
+    /// Returns the type id of the current variant.
+    fn current_variant_id(&self) -> std::any::TypeId;
 }
