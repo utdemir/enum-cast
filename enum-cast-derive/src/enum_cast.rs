@@ -113,6 +113,8 @@ fn generate_downcast_chain(
 fn derive_extension(enum_name: &Ident) -> proc_macro2::TokenStream {
     quote! {
         impl #enum_name {
+            /// Converts the current enum variant to the equivalent variant in the
+            /// target enum. Target enum needs to be a superset of Self.
             fn upcast<Other>(self) -> Other
             where
                 Self: ::enum_cast::IsSubsetOf<Other>,
@@ -120,6 +122,11 @@ fn derive_extension(enum_name: &Ident) -> proc_macro2::TokenStream {
                 <Self as ::enum_cast::IsSubsetOf<Other>>::upcast(self)
             }
 
+            /// Converts the current enum variant to the equivalent variant in the
+            /// target enum if possible. Target enum needs to be a subset of Self.
+            ///
+            /// If the current variant cannot be represented in the target enum,
+            /// return the current variant unchanged as `Err(self)`
             fn downcast<Other>(self) -> Result<Other, Self>
             where
                 Other: ::enum_cast::IsSubsetOf<Self>,
