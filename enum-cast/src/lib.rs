@@ -1,7 +1,51 @@
-pub use enum_cast_derive::{EnumCast, EnumVariantIds};
+//! `enum-cast` is a library to create ergonomic and safe casting between
+//! enums with common variants.
+//!
+//! Example:
+//!
+//! ```rust
+//! use enum_cast::EnumCast;
+//!
+//! #[derive(EnumCast)]
+//! enum Foo {
+//!     FooA(SomeA),
+//!     FooB(SomeB),
+//! }
+//!
+//! #[derive(EnumCast)]
+//! enum Bar {
+//!     BarA(SomeA),
+//!     BarB(SomeB),
+//!     BarC(SomeC),
+//! }
+//!
+//! let foo = Foo::FooA(SomeA);
+//! assert_eq!(
+//!   foo.upcast::<Bar>(),
+//!   Bar::BarA(SomeA)
+//! );
+//!
+//! let bar = Bar::BarA(SomeA);
+//! assert_eq!(
+//!   bar.downcast::<Foo>(),
+//!   Ok(Foo::FooA(SomeA))
+//! );
+//! ```
+
+#[doc(inline)]
+/// Derives traits for casting across enums, and implements `downcast` and `upcast` helper methods.
+pub use enum_cast_derive::EnumCast;
+
+#[doc(inline)]
+/// Derives [EnumVariantIds] trait.
+pub use enum_cast_derive::EnumVariantIds;
+
+#[doc(hidden)]
 pub use typeid::ConstTypeId;
 
 /// A trait for enums that contain a variant holding a value of type `T`.
+///
+/// Derived by 'EnumCast'
 pub trait HasVariant<T>
 where
     Self: Sized,
@@ -11,6 +55,8 @@ where
 }
 
 /// A trait indicating that `Self` is a subset of `Other`, meaning all variants of `Self` exist in `Other`.
+///
+/// Derived by 'EnumCast'
 pub trait IsSubsetOf<Other>
 where
     Self: Sized,
@@ -23,7 +69,13 @@ where
     fn downcast_from(other: Other) -> Result<Self, Other>;
 }
 
+/// Provides runtime access to the type ids of enum variants.
+///
+/// Derived by 'EnumVariantIds'
 pub trait EnumVariantIds {
+    /// An array of the type ids of all variants.
     const VARIANT_TYPE_IDS: &'static [ConstTypeId];
+
+    /// Returns the type id of the current variant.
     fn current_variant_id(&self) -> ConstTypeId;
 }

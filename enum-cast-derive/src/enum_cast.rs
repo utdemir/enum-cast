@@ -122,7 +122,7 @@ fn derive_extension(enum_name: &Ident) -> proc_macro2::TokenStream {
                 <Self as ::enum_cast::IsSubsetOf<Other>>::upcast(self)
             }
 
-            /// Attempts to convert the current enum variant to the equivalent variant 
+            /// Attempts to convert the current enum variant to the equivalent variant
             /// in the target enum. The target enum must be a subset of `Self`.
             ///
             /// If the current variant cannot be represented in the target enum,
