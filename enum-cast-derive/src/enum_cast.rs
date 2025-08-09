@@ -97,9 +97,10 @@ fn generate_downcast_chain(
     let mut result = quote! { Err(other) };
 
     // Build the chain from right to left (last to first)
-    for &(variant_name, _field_type) in variant_info.iter().rev() {
+    for &(variant_name, field_type) in variant_info.iter().rev() {
         result = quote! {
-            match other.take() {
+            // match other.take() {
+            match <Other as ::enum_cast::HasVariant<#field_type>>::take(other) {
                 Ok(v) => Ok(#enum_name::#variant_name(v)),
                 Err(other) => #result,
             }
