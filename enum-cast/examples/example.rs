@@ -36,7 +36,6 @@ fn simple() {
 fn variant_ids() {
     // An (admittedly obscure) use case of this crate is to figure out whether
     // a particular variant is present in a target enum. Here's how:
-
     let cat_animal = Animal::Cat(Cat);
     let capybara_animal = Animal::Capybara(Capybara);
 
