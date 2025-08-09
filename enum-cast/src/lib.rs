@@ -76,4 +76,7 @@ pub trait EnumVariantIds {
 
     /// Returns the type id of the current variant.
     fn current_variant_id(&self) -> std::any::TypeId;
+    // TODO: When TypeId::of starts working in const context[1],
+    // we should make this an associated constant instead.
+    // [1]: https://github.com/rust-lang/rust/issues/77125
 }
