@@ -1,7 +1,6 @@
 pub use enum_cast_derive::{EnumCast, EnumVariantIds};
 pub use typeid::ConstTypeId;
 
-
 /// A trait for enumerations (coproducts) that contain a variant of type `T`.
 pub trait HasVariant<T>
 where
@@ -18,7 +17,7 @@ where
 {
     /// Cast `Self` to `Other`.
     fn upcast(self) -> Other;
-    
+
     /// Convert from `Other` to self if the variant is matching,
     /// otherwise return the original `Other`.
     fn downcast_from(other: Other) -> Result<Self, Other>;
