@@ -1,4 +1,5 @@
-pub use enum_cast_derive::EnumCast;
+pub use enum_cast_derive::{EnumCast, EnumVariantIds};
+pub use typeid::ConstTypeId;
 
 pub trait Contains<T>
 where
@@ -14,4 +15,9 @@ where
 {
     fn upcast(self) -> Other;
     fn downcast_from(other: Other) -> Result<Self, Other>;
+}
+
+pub trait EnumVariantIds {
+    const VARIANT_TYPE_IDS: &'static [ConstTypeId];
+    fn current_variant_id(&self) -> ConstTypeId;
 }
