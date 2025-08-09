@@ -10,3 +10,7 @@ A Rust library that provides:
 - **Derive macro convenience**: Automatic trait implementations via `#[derive(EnumCast)]`
 - **Type-safe casting**: `upcast()` and `downcast()` methods for converting between enums with subset relationships
 - **Runtime variant access**: Access enum variant information at runtime using TypeIds
+
+## See example
+
+For usage examples, see [example](enum-cast/examples/example.rs).
