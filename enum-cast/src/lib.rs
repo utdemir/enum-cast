@@ -42,7 +42,7 @@ pub use enum_cast_derive::EnumVariantIds;
 
 /// A trait for enums that contain a variant holding a value of type `T`.
 ///
-/// Derived by 'EnumCast'
+/// Derived by `EnumCast`
 pub trait HasVariant<T>
 where
     Self: Sized,
@@ -53,7 +53,7 @@ where
 
 /// A trait indicating that `Self` is a subset of `Other`, meaning all variants of `Self` exist in `Other`.
 ///
-/// Derived by 'EnumCast'
+/// Derived by `EnumCast`
 pub trait IsSubsetOf<Other>
 where
     Self: Sized,
@@ -68,7 +68,7 @@ where
 
 /// Provides runtime access to the type ids of enum variants.
 ///
-/// Derived by 'EnumVariantIds'
+/// Derived by `EnumVariantIds`
 pub trait EnumVariantIds {
     /// Returns a vector of the type ids of all variants.
     fn variant_type_ids() -> Vec<std::any::TypeId>;
