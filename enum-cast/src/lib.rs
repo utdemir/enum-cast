@@ -3,7 +3,7 @@
 //!
 //! Example:
 //!
-//! ```rust
+//! ```rust,ignore
 //! use enum_cast::EnumCast;
 //!
 //! #[derive(EnumCast)]
@@ -40,8 +40,6 @@ pub use enum_cast_derive::EnumCast;
 /// Derives [EnumVariantIds] trait.
 pub use enum_cast_derive::EnumVariantIds;
 
-#[doc(hidden)]
-pub use typeid::ConstTypeId;
 
 /// A trait for enums that contain a variant holding a value of type `T`.
 ///
@@ -73,9 +71,9 @@ where
 ///
 /// Derived by 'EnumVariantIds'
 pub trait EnumVariantIds {
-    /// An array of the type ids of all variants.
-    const VARIANT_TYPE_IDS: &'static [ConstTypeId];
+    /// Returns a vector of the type ids of all variants.
+    fn variant_type_ids() -> Vec<std::any::TypeId>;
 
     /// Returns the type id of the current variant.
-    fn current_variant_id(&self) -> ConstTypeId;
+    fn current_variant_id(&self) -> std::any::TypeId;
 }

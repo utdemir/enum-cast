@@ -37,3 +37,4 @@ The derive macro in `enum-cast-derive/src/lib.rs:6` generates:
 
 ### Example Usage Pattern
 See `example/src/lib.rs:1` for comprehensive usage examples showing variant access, subset relationships, and downcasting operations.
+- Use "cargo build --examples" to test if the example compiles after changes.

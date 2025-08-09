@@ -4,7 +4,7 @@
 [![Documentation](https://docs.rs/enum-cast/badge.svg)](https://docs.rs/enum-cast)
 [![Build Status](https://github.com/utdemir/enum-cast/workflows/CI/badge.svg)](https://github.com/utdemir/enum-cast/actions)
 
-A Rust library that provides:
+A runtime-dependency free Rust library that provides:
 
 - **Derive macro convenience**: Automatic trait implementations via `#[derive(EnumCast)]`
 - **Type-safe casting**: `upcast()` and `downcast()` methods for converting between enums with subset relationships

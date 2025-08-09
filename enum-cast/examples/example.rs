@@ -39,7 +39,7 @@ fn variant_ids() {
     let cat_animal = Animal::Cat(Cat);
     let capybara_animal = Animal::Capybara(Capybara);
 
-    let domestic_animal_ids = DomesticAnimal::VARIANT_TYPE_IDS;
+    let domestic_animal_ids = DomesticAnimal::variant_type_ids();
 
     let is_cat_domestic = domestic_animal_ids.contains(&cat_animal.current_variant_id());
     let is_capybara_domestic = domestic_animal_ids.contains(&capybara_animal.current_variant_id());

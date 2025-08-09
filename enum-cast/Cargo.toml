@@ -5,4 +5,3 @@ edition.workspace = true
 
 [dependencies]
 enum-cast-derive = { path = "../enum-cast-derive" }
-typeid = "1.0.3"

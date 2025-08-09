@@ -28,22 +28,24 @@ fn derive_enum_variant_ids_impl(
     variant_info: &[(&Ident, &syn::Type)],
 ) -> proc_macro2::TokenStream {
     let variant_type_ids = variant_info.iter().map(|&(_, ty)| {
-        quote! { ::enum_cast::ConstTypeId::of::<#ty>() }
+        quote! { std::any::TypeId::of::<#ty>() }
     });
 
     let current_variant_id_arms = variant_info.iter().map(|&(variant_name, field_type)| {
         quote! {
-            #enum_name::#variant_name(_) => ::enum_cast::ConstTypeId::of::<#field_type>()
+            #enum_name::#variant_name(_) => std::any::TypeId::of::<#field_type>()
         }
     });
 
     quote! {
         impl ::enum_cast::EnumVariantIds for #enum_name {
-            const VARIANT_TYPE_IDS: &'static [::enum_cast::ConstTypeId] = &[
-                #(#variant_type_ids,)*
-            ];
+            fn variant_type_ids() -> Vec<std::any::TypeId> {
+                vec![
+                    #(#variant_type_ids,)*
+                ]
+            }
 
-            fn current_variant_id(&self) -> ::enum_cast::ConstTypeId {
+            fn current_variant_id(&self) -> std::any::TypeId {
                 match self {
                     #(#current_variant_id_arms,)*
                 }
